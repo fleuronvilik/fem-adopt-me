@@ -4,7 +4,7 @@ function useDropdown(label, defaultState, options) {
   var [state, updateState] = useState(defaultState);
   var id = `use-dropdown-${label.replace(" ", "").toLowerCase()}`;
 
-  return [state, Dropdown];
+  return [state, Dropdown, updateState];
 
   function Dropdown() {
     return (
