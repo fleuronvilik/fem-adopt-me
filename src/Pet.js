@@ -1,14 +1,15 @@
 import React from "react";
+import { Link } from "@reach/router";
 
 export default function Pet(props) {
   var { animal, name, breed, media, location, id } = props;
 
-  var hero = "https://placecorgi.com/300/300"; // default
+  var hero = "http://placecorgi.com/300/300";
   if (media.length) {
     hero = media[0].small;
   }
   return (
-    <a href={`/details/${id}`} className="pet">
+    <Link to={`/details/${id}`} className="pet">
       <div className="image-container">
         <img src={hero} alt={name} />
       </div>
@@ -16,6 +17,6 @@ export default function Pet(props) {
         <h2>{name}</h2>
         <h3>{`${animal} — ${breed} — ${location}`}</h3>
       </div>
-    </a>
+    </Link>
   );
 }
