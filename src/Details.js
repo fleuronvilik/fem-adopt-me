@@ -1,5 +1,6 @@
 import React from "react";
 import Carousel from "./Carousel";
+import ErrorBoundary from "./ErrorBoundary";
 import pet from "@frontendmasters/pet";
 
 class Details extends React.Component {
@@ -8,6 +9,7 @@ class Details extends React.Component {
     this.state = { loading: true };
   }
   componentDidMount() {
+    // throw new Error("lol"); // to test ErrorBoundary
     pet
       .animal(+this.props.id)
       .then(({ animal }) => {
@@ -18,10 +20,10 @@ class Details extends React.Component {
           description: animal.description,
           media: animal.photos,
           breed: animal.breeds.primary,
-          loading: false
+          loading: false,
         });
       })
-      .catch(err => this.setState({ error: err }))
+      .catch((err) => this.setState({ error: err }));
   }
   render() {
     if (this.state.loading) {
@@ -31,7 +33,7 @@ class Details extends React.Component {
         </div>
       );
     }
-    
+
     const { animal, breed, location, description, name, media } = this.state;
     return (
       <div className="details">
@@ -43,8 +45,14 @@ class Details extends React.Component {
           <p>{description}</p>
         </div>
       </div>
-    )
+    );
   }
-};
+}
 
-export default Details;
+export default function DetailsErrorBoundary(props) {
+  return (
+    <ErrorBoundary>
+      <Details {...props} />
+    </ErrorBoundary>
+  );
+}
